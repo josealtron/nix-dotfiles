@@ -67,11 +67,41 @@
   #
   #  /etc/profiles/per-user/josealtron/etc/profile.d/hm-session-vars.sh
   #
-  home.sessionVariables = {
-    # EDITOR = "emacs";
-  };
+home.sessionVariables = rec {
+   DOTLOCAL = "$HOME/.local";
+   LOCAL_APPS = "${DOTLOCAL}/applications";
+   CARGO_HOME="${LOCAL_APPS}/cargo";
+   RUSTUP_HOME="${LOCAL_APPS}/rustup";
+   GOPATH="${LOCAL_APPS}/prebuilt/go";
+   NVM_DIR="${LOCAL_APPS}/nvm";
 
-  # Programs with custom configuration
+   XDG_CONFIG_HOME="$HOME/.config";
+   XDG_CACHE_HOME="$HOME/.cache";
+   XDG_DATA_HOME="$HOME/.local/share";
+   XDG_STATE_HOME="$HOME/.local/state";
+   GNUPGHOME="${XDG_CONFIG_HOME}/gnupg";
+   GRADLE_USER_HOME="${XDG_CONFIG_HOME}/gradle";
+   LESSHSTFILE="${XDG_CONFIG_HOME}/less/lesshst";
+
+   EDITOR="hx";
+   VISUAL="hx";
+
+
+   ZDOTDIR="${XDG_CONFIG_HOME}/zsh";
+   ZSHRC="${ZDOTDIR}/.zshrc";
+   HISTFILE="${ZDOTDIR}/.zhistory";
+   HISTSIZE=10000;
+   SAVEHIST=10000;
+
+   LC_ALL="en_US.UTF-8";
+   LANG="en_US.UTF-8";
+   LC_CTYPE="en_US.UTF-8";
+   LANGUAGE="en_US.UTF-8";
+
+
+};
+
+# Programs with custom configuration
   programs.home-manager = {
     enable = true;
     path = lib.mkForce "$HOME/dotfiles";
