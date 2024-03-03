@@ -106,7 +106,18 @@
     zsh = {
       enable = true;
       dotDir = ".config/zsh";
-      initExtraFirst = "source $ZDOTDIR/.zshrc_pre_nix";
+      initExtraFirst = ''
+        # powerlevel10k setup
+
+          if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+            source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
+          fi
+          POWERLEVEL10K_THEME=$ZDOTDIR/themes/powerlevel10k/powerlevel10k.zsh-theme
+          POWERLEVEL10K_CONFIG=$ZDOTDIR/.p10k.zsh
+          [[ ! -f $POWERLEVEL10K_CONFIG ]] || source $POWERLEVEL10K_CONFIG
+            source $POWERLEVEL10K_THEME
+      '';
+
       initExtra = ''
         setopt AUTO_PUSHD PUSHD_IGNORE_DUPS PUSHD_SILENT
         bindkey -v
@@ -117,8 +128,25 @@
         bindkey -M vicmd 'v' edit-command-line
         bindkey '^ ' autosuggest-accept
         bindkey '^a' autosuggest-execute
-        bindkey '^X' run-previous-cmd
+        for index ({0..9}) alias "$index"="cd +''${index}"; unset index
       '';
+
+      shellAliases = {
+        la = "ls --color -a";
+        ls = "ls --color";
+        cat = "bat";
+        rm = "rm -i";
+        ppath = "echo $PATH | tr \":\" \"\n\"" ;
+        gst = "git status";
+        glo = "git log --pretty=\"oneline\"";
+        gco = "git checkout";
+        gcm = "git commit";
+        ga = "git add -v";
+        hm = "home-manager";
+        hms = "home-manager switch --flake $HOME/dotfiles";
+        d = "dirs -v | sort -nr" ;
+      };
+
       history = {
         ignoreAllDups = true;
         extended = true;
@@ -173,6 +201,7 @@
         enable = true;
         plugins = [
           { name = "Tarrasch/zsh-bd"; }
+          { name = "romkatv/powerlevel10k"; tags = [ as:theme depth:1 ]; }
         ];
       };
     };
