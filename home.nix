@@ -84,6 +84,8 @@
      EDITOR="hx";
      VISUAL="hx";
 
+     KEYTIMEOUT=1;
+
 
      ZDOTDIR="${XDG_CONFIG_HOME}/zsh";
      ZSHRC="${ZDOTDIR}/.zshrc";
@@ -107,6 +109,15 @@
       initExtraFirst = "source $ZDOTDIR/.zshrc_pre_nix";
       initExtra = ''
         setopt AUTO_PUSHD PUSHD_IGNORE_DUPS PUSHD_SILENT
+        bindkey -v
+        bindkey -M menuselect 'h' vi-backward-char
+        bindkey -M menuselect 'k' vi-up-line-or-history
+        bindkey -M menuselect 'l' vi-forward-char
+        bindkey -M menuselect 'j' vi-down-line-or-history
+        bindkey -M vicmd 'v' edit-command-line
+        bindkey '^ ' autosuggest-accept
+        bindkey '^a' autosuggest-execute
+        bindkey '^X' run-previous-cmd
       '';
       history = {
         ignoreAllDups = true;
@@ -116,6 +127,47 @@
       autocd = true;
       syntaxHighlighting.enable = true;
       enableAutosuggestions = true;
+      enableCompletion = true;
+      completionInit = ''
+        autoload -Uz edit-command-line
+        zle -N edit-command-line
+
+        autoload -U compinit; compinit
+        zmodload zsh/complist
+
+        __comp_options+=(globdots) # With hidden files
+        setopt ALWAYS_TO_END AUTO_PARAM_SLASH 
+
+        ## completers
+
+        zstyle ':completion:*' completer _extensions _complete _approximate 
+
+        ## completion cache
+
+        zstyle ':completion:*' use-cache on
+        zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/.zcompcache"
+
+        ## completion menu
+
+        zstyle ':completion:*' menu select
+
+        ## Groupings
+        zstyle ':completion:*' group-name ''' # group by type of match
+        zstyle ':completion:*:*:-command-:*:*' group-order alias builtins functions commands
+
+        ## Display descriptions for correction types
+        zstyle ':completion:*:*:*:*:descriptions' format '%F{blue}-- %d --%f'
+        zstyle ':completion:*:*:*:*:corrections' format '%F{yellow}!- %d -!%f'
+
+        zstyle ':completion:*:default' list-colors ''${(s.:.)LS_COLORS}
+
+        # Matching control
+        ## Case Insensitive completions if case sensitive fails
+        zstyle ':completion:*' matcher-list ''' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+        ## Try to complete partial words
+        zstyle ':completion:*' matcher-list ''' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+      '';
 
       zplug = {
         enable = true;
