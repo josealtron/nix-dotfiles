@@ -20,7 +20,6 @@
   # environment.
   home.packages = [
     pkgs.btop
-    pkgs.atuin
     pkgs.tree
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
@@ -133,6 +132,10 @@
     direnv = {
       enable = true;
       nix-direnv.enable = true;
+    };
+
+    atuin = {
+      enable = true;
     };
   }; # programs
 }
