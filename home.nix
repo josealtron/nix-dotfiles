@@ -105,6 +105,9 @@
       enable = true;
       dotDir = ".config/zsh";
       initExtraFirst = "source $ZDOTDIR/.zshrc_pre_nix";
+      initExtra = ''
+        setopt AUTO_PUSHD PUSHD_IGNORE_DUPS PUSHD_SILENT
+      '';
       history = {
         ignoreAllDups = true;
         extended = true;
