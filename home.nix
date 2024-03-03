@@ -108,14 +108,11 @@
       dotDir = ".config/zsh";
       initExtraFirst = ''
         # powerlevel10k setup
-
           if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
             source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
           fi
-          POWERLEVEL10K_THEME=$ZDOTDIR/themes/powerlevel10k/powerlevel10k.zsh-theme
           POWERLEVEL10K_CONFIG=$ZDOTDIR/.p10k.zsh
           [[ ! -f $POWERLEVEL10K_CONFIG ]] || source $POWERLEVEL10K_CONFIG
-            source $POWERLEVEL10K_THEME
       '';
 
       initExtra = ''
