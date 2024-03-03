@@ -72,7 +72,6 @@
      CARGO_HOME="${LOCAL_APPS}/cargo";
      RUSTUP_HOME="${LOCAL_APPS}/rustup";
      GOPATH="${LOCAL_APPS}/prebuilt/go";
-     NVM_DIR="${LOCAL_APPS}/nvm";
 
      XDG_CONFIG_HOME="$HOME/.config";
      XDG_CACHE_HOME="$HOME/.cache";
@@ -111,6 +110,21 @@
         extended = true;
         path = "$ZDOTDIR/.zhistory";
       };
+      autocd = true;
+      syntaxHighlighting.enable = true;
+      enableAutosuggestions = true;
+
+      zplug = {
+        enable = true;
+        plugins = [
+          { name = "Tarrasch/zsh-bd"; }
+        ];
+      };
+    };
+
+    fzf = {
+      enable = true;
+      enableZshIntegration = true;
     };
 
     helix = {
@@ -135,6 +149,10 @@
     };
 
     atuin = {
+      enable = true;
+    };
+
+    zoxide = {
       enable = true;
     };
   }; # programs
