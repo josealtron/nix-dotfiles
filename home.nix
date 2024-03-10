@@ -21,6 +21,8 @@
   home.packages = [
     pkgs.btop
     pkgs.tree
+    pkgs.parallel
+    
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -73,27 +75,28 @@
      RUSTUP_HOME="${LOCAL_APPS}/rustup";
      GOPATH="${LOCAL_APPS}/prebuilt/go";
 
-     XDG_CONFIG_HOME="$HOME/.config";
-     XDG_CACHE_HOME="$HOME/.cache";
-     XDG_DATA_HOME="$HOME/.local/share";
-     XDG_STATE_HOME="$HOME/.local/state";
-     GNUPGHOME="${XDG_CONFIG_HOME}/gnupg";
-     GRADLE_USER_HOME="${XDG_CONFIG_HOME}/gradle";
-     LESSHSTFILE="${XDG_CONFIG_HOME}/less/lesshst";
+     XDG_CONFIG_HOME = "$HOME/.config";
+     XDG_CACHE_HOME = "$HOME/.cache";
+     XDG_DATA_HOME = "$HOME/.local/share";
+     XDG_STATE_HOME = "$HOME/.local/state";
+     GNUPGHOME = "${XDG_CONFIG_HOME}/gnupg";
+     GRADLE_USER_HOME = "${XDG_CONFIG_HOME}/gradle";
+     LESSHSTFILE = "${XDG_CONFIG_HOME}/less/lesshst";
 
-     EDITOR="hx";
-     VISUAL="hx";
+     EDITOR = "hx";
+     VISUAL = "hx";
 
-     KEYTIMEOUT=1;
+     KEYTIMEOUT = 1;
 
 
-     ZDOTDIR="${XDG_CONFIG_HOME}/zsh";
-     ZSHRC="${ZDOTDIR}/.zshrc";
+     ZDOTDIR = "${XDG_CONFIG_HOME}/zsh";
+     ZSHRC = "${ZDOTDIR}/.zshrc";
+     HISTFILE = "${ZDOTDIR}/.zhistory";
 
-     LC_ALL="en_US.UTF-8";
-     LANG="en_US.UTF-8";
-     LC_CTYPE="en_US.UTF-8";
-     LANGUAGE="en_US.UTF-8";
+     LC_ALL = "en_US.UTF-8";
+     LANG = "en_US.UTF-8";
+     LC_CTYPE = "en_US.UTF-8";
+     LANGUAGE = "en_US.UTF-8";
   };
 
 # Programs with custom configuration
@@ -133,16 +136,26 @@
         ls = "ls --color";
         cat = "bat";
         rm = "rm -i";
+        mv = "mv -i";
+        cp = "cp -i";
+        d = "dirs -v | sort -nr" ;
         ppath = "echo $PATH | tr \":\" \"\n\"" ;
+
+        # Git
         gst = "git status";
         glo = "git log --pretty=\"oneline\"";
+        glg = "git log --stat";
         gco = "git checkout";
         gcm = "git commit";
         gcmm = "git commit -m";
         ga = "git add -v";
+        gsh = "git stash";
+        gsp = "git stash pop";
+        gsl = "git stash list";
+
+        # home-manager
         hm = "home-manager";
         hms = "home-manager switch --flake $HOME/dotfiles";
-        d = "dirs -v | sort -nr" ;
       };
 
       history = {
@@ -223,6 +236,10 @@
           defaultBranch = "main";
         };
       };
+    };
+
+    jq = {
+      enable = true;
     };
 
     direnv = {
