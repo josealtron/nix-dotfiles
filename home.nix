@@ -138,6 +138,7 @@
         glo = "git log --pretty=\"oneline\"";
         gco = "git checkout";
         gcm = "git commit";
+        gcmm = "git commit -m";
         ga = "git add -v";
         hm = "home-manager";
         hms = "home-manager switch --flake $HOME/dotfiles";
@@ -210,7 +211,7 @@
 
     helix = {
       enable = true;
-      extraPackages = [ pkgs.nil ];
+      extraPackages = [ pkgs.nil pkgs.marksman ];
     };
 
     git = {
